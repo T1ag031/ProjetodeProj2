@@ -76,20 +76,6 @@ public class EncomendaBLL implements Serializable {
 
     //EDITAR ENCOMENDA
 
-    /*
-    public static void editDataEncomenda(int numenc, Date data){
-        EntityManager em = null;
-        em = getEntityManager();
-        em.getTransaction();
-        Encomenda enc;
-        em.getTransaction().begin();
-        enc = em.find(Encomenda.class, numenc);
-        enc.setData((java.sql.Date) data);
-        em.persist(enc);
-        em.getTransaction().commit();
-        em.close();
-    }
-*/
     public static void editValorEncomenda(int numenc, float valor){
         EntityManager em = null;
         em = getEntityManager();
@@ -101,22 +87,6 @@ public class EncomendaBLL implements Serializable {
         em.persist(enc);
         em.getTransaction().commit();
         em.close();
-    }
-
-    //OBTER O Nº DE ENCOMENDAS
-
-
-    public static int getClienteCount() {
-        EntityManager em = getEntityManager();
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Cliente> rt = cq.from(Encomenda.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
     }
 
 }

@@ -44,13 +44,17 @@ public class ClienteBLL implements Serializable {
 
     //LOGIN
 
-    public static Cliente login(String username,String pass) throws Exception{
+    public static boolean login(String username,String pass){
+        boolean certo =false;
         for(Cliente c: findClienteEntities()){
-            if(c.getUsername().equals(username) && c.getPassword().equals(pass))
-                //System.out.println("Log In efetuado com Sucesso!");
-                return c;
+            if(c.getUsername().equals(username) && c.getPassword().equals(pass)) {
+                System.out.println("Log In efetuado com Sucesso!");
+                certo=true;
+            }else{
+                certo=false;
+            }
         }
-        throw new Exception("Username ou Password Errados");
+        return certo;
     }
 
 

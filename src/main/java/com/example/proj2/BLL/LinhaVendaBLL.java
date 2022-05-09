@@ -1,24 +1,24 @@
 package com.example.proj2.BLL;
 
-import com.example.proj2.DAL.*;
+import com.example.proj2.DAL.Peca;
+import com.example.proj2.DAL.Venda;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
-public class PecaBLL implements Serializable {
+public class LinhaVendaBLL implements Serializable {
     private static final String PERSISTENCE_UNIT_NAME = "default";
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
     public static EntityManager getEntityManager(){
         return emf.createEntityManager();
     }
-
     public static Peca findPecaId(int idpeca) {
         EntityManager em = getEntityManager();
         try {
@@ -60,22 +60,6 @@ public class PecaBLL implements Serializable {
         em.close();
     }
 
-    public static void deletePeca(int idpeca){
-        EntityManager em = null;
-        em = getEntityManager();
-        em.getTransaction().begin();
-        Peca peca;
-        peca = em.getReference(Peca.class, idpeca);
-        peca.setIdpeca(idpeca);
-        peca.getIdpeca();
-        em.remove(peca);
-        em.getTransaction().commit();
-        em.close();
-    }
-
-    //EDITAR DADOS PECA
-
-
     public static void editNomePeca(int idpeca, String nome){
         EntityManager em = null;
         em = getEntityManager();
@@ -113,6 +97,19 @@ public class PecaBLL implements Serializable {
         em.getTransaction().commit();
         em.close();
     }
+
+    public static void editValorVenda(int numvenda, float valor){
+        EntityManager em = null;
+        em = getEntityManager();
+        em.getTransaction();
+        Venda venda;
+        em.getTransaction().begin();
+        venda = em.find(Venda.class, numvenda);
+        venda.setValortotal(BigDecimal.valueOf(valor));
+        em.persist(venda);
+        em.getTransaction().commit();
+        em.close();
+    }
     public static Venda findVendaNumvenda(int numvenda) {
         EntityManager em = getEntityManager();
         try {
@@ -121,7 +118,6 @@ public class PecaBLL implements Serializable {
             em.close();
         }
     }
-
     public static List<Venda> findVendaEntities() {
         List<Venda> vendas;
         EntityManager em = getEntityManager();
@@ -132,7 +128,6 @@ public class PecaBLL implements Serializable {
         em.close();
         return vendas;
     }
-
     public static void create(Venda venda) {
         EntityManager em = null;
         em = getEntityManager();
@@ -141,6 +136,4 @@ public class PecaBLL implements Serializable {
         em.getTransaction().commit();
         em.close();
     }
-
-
 }

@@ -68,19 +68,6 @@ public class VendaBLL implements Serializable {
 
     //EDITAR DADOS VENDA
 
-    public static void editDateVenda(int numvenda, Date date){
-        EntityManager em = null;
-        em = getEntityManager();
-        em.getTransaction();
-        Venda venda;
-        em.getTransaction().begin();
-        venda = em.find(Venda.class, numvenda);
-        venda.setData((java.sql.Date) date);
-        em.persist(venda);
-        em.getTransaction().commit();
-        em.close();
-    }
-
     public static void editValorVenda(int numvenda, float valor){
         EntityManager em = null;
         em = getEntityManager();
@@ -94,18 +81,4 @@ public class VendaBLL implements Serializable {
         em.close();
     }
 
-    //OBTER O Nº DE VENDAS
-
-    public static int getClienteCount() {
-        EntityManager em = getEntityManager();
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Cliente> rt = cq.from(Venda.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
-    }
 }

@@ -1,24 +1,23 @@
 package com.example.proj2.BLL;
 
-import com.example.proj2.DAL.*;
+import com.example.proj2.DAL.Peca;
+import com.example.proj2.DAL.Tecido;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.List;
 
-public class PecaBLL implements Serializable {
+public class TecPecaBLL implements Serializable {
     private static final String PERSISTENCE_UNIT_NAME = "default";
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
     public static EntityManager getEntityManager(){
         return emf.createEntityManager();
     }
-
     public static Peca findPecaId(int idpeca) {
         EntityManager em = getEntityManager();
         try {
@@ -40,7 +39,6 @@ public class PecaBLL implements Serializable {
     }
 
     //PROCURAR PECA PELO NOME
-
     public static Peca findByNome(String nome) throws Exception{
         for (Peca c : findPecaEntities()){
             if (c.getNome().equals(nome)){
@@ -59,22 +57,6 @@ public class PecaBLL implements Serializable {
         em.getTransaction().commit();
         em.close();
     }
-
-    public static void deletePeca(int idpeca){
-        EntityManager em = null;
-        em = getEntityManager();
-        em.getTransaction().begin();
-        Peca peca;
-        peca = em.getReference(Peca.class, idpeca);
-        peca.setIdpeca(idpeca);
-        peca.getIdpeca();
-        em.remove(peca);
-        em.getTransaction().commit();
-        em.close();
-    }
-
-    //EDITAR DADOS PECA
-
 
     public static void editNomePeca(int idpeca, String nome){
         EntityManager em = null;
@@ -113,34 +95,46 @@ public class PecaBLL implements Serializable {
         em.getTransaction().commit();
         em.close();
     }
-    public static Venda findVendaNumvenda(int numvenda) {
+
+    public static Tecido findTecidoId(int idtecido) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Venda.class, numvenda);
+            return em.find(Tecido.class, idtecido);
         } finally {
             em.close();
         }
     }
 
-    public static List<Venda> findVendaEntities() {
-        List<Venda> vendas;
+    public static List<Tecido> findTecidoEntities() {
+        List<Tecido> tecs;
         EntityManager em = getEntityManager();
         CriteriaQuery<Object> cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(Venda.class));
+        cq.select(cq.from(Tecido.class));
         Query q = em.createQuery(cq);
-        vendas=((List<Venda>) q.getResultList());
+        tecs=((List<Tecido>) q.getResultList());
         em.close();
-        return vendas;
+        return tecs;
     }
 
-    public static void create(Venda venda) {
+    public static void create(Tecido tecido) {
         EntityManager em = null;
         em = getEntityManager();
         em.getTransaction().begin();
-        em.persist(venda);
+        em.persist(tecido);
         em.getTransaction().commit();
         em.close();
     }
 
-
+    public static void editDescTecido(int idtecido, String desc){
+        EntityManager em = null;
+        em = getEntityManager();
+        em.getTransaction();
+        Tecido tecido;
+        em.getTransaction().begin();
+        tecido = em.find(Tecido.class, idtecido);
+        tecido.setDescricao(desc);
+        em.persist(tecido);
+        em.getTransaction().commit();
+        em.close();
+    }
 }

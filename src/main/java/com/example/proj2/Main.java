@@ -3,10 +3,10 @@ package com.example.proj2;
 import com.example.proj2.BLL.*;
 import com.example.proj2.DAL.*;
 
-import java.util.Date;
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         /*Cliente cli= new Cliente();
         cli.setCodpostal("123456");
         cli.setEmail("abcd@gmail.com");
@@ -78,7 +78,7 @@ public class Main {
         System.out.println(n);*/
         //ClienteBLL.login(2, "jao");
 
-        //ClienteBLL.login("TIAGO", "TIAGO", 1);
+        //ClienteBLL.login("TIAGO1", "TIAGO");
 
         //Cliente cliente = ClienteBLL.findClientebyName("Tiago");
         //System.out.println(cliente.getNome());
@@ -89,14 +89,16 @@ public class Main {
         //    System.out.println("ID DE CLIENTE: "+c.getCodcliente()+" USERNAME: "+c.getUsername());
         //
         // }
-        try{
-            //Encomenda c = EncomendaBLL.findByDate(Date.pa(2022-04-22));
-            //Substituir pelas labels
-            //System.out.println("Num Encomenda: " + c.getData() + "\nData: " +c.getData() + "\nValor Total: " + c.getValortotal());
-        }
-        catch (Exception ex){
-            System.out.println(ex.getMessage());
-        }
-        //EncomendaBLL.deleteEncomenda(1);
+        /*List<Encomenda> list = LinhaEncomendaBLL.findEncomendaEntities();
+        List<Fornecedor> lidtf = FornecedorBLL.findFornecedorEntities();
+        for (Encomenda e : list){
+            for (Fornecedor f : lidtf){
+                if (f.getCodfornecedor()==e.getCodfornecedor()){
+                    if (e.getNumencomenda()==1){
+                        System.out.println("\nNº: " + e.getNumencomenda() + "\nvalor: " + e.getValortotal()+ "\nFornecedor: " + f.getNome());
+                    }
+                }
+            }
+        }*/
     }
 }

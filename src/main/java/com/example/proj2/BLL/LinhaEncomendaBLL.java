@@ -1,22 +1,62 @@
 package com.example.proj2.BLL;
-
-import com.example.proj2.DAL.*;
-
+import com.example.proj2.DAL.Encomenda;
+import com.example.proj2.DAL.Tecido;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
-public class TecidoBLL implements Serializable {
+public class LinhaEncomendaBLL implements Serializable {
     private static final String PERSISTENCE_UNIT_NAME = "default";
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
     public static EntityManager getEntityManager(){
         return emf.createEntityManager();
+    }
+
+    public static Encomenda findEncomendaNumEnc(int numencomenda) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Encomenda.class, numencomenda);
+        } finally {
+            em.close();
+        }
+    }
+
+    public static List<Encomenda> findEncomendaEntities(){
+        List<Encomenda> encs;
+        EntityManager em = getEntityManager();
+        CriteriaQuery<Object> cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Encomenda.class));
+        Query q = em.createQuery(cq);
+        encs=((List<Encomenda>) q.getResultList());
+        em.close();
+        return encs;
+    }
+    public static void create(Encomenda encomenda) {
+        EntityManager em = null;
+        em = getEntityManager();
+        em.getTransaction().begin();
+        em.persist(encomenda);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public static void editValorEncomenda(int numenc, float valor){
+        EntityManager em = null;
+        em = getEntityManager();
+        em.getTransaction();
+        Encomenda enc;
+        em.getTransaction().begin();
+        enc = em.find(Encomenda.class, numenc);
+        enc.setValortotal(BigDecimal.valueOf(valor));
+        em.persist(enc);
+        em.getTransaction().commit();
+        em.close();
     }
 
     public static Tecido findTecidoId(int idtecido) {
@@ -48,21 +88,6 @@ public class TecidoBLL implements Serializable {
         em.close();
     }
 
-    public static void deleteTecido(int idtecido){
-        EntityManager em = null;
-        em = getEntityManager();
-        em.getTransaction().begin();
-        Tecido tecido;
-        tecido = em.getReference(Tecido.class, idtecido);
-        tecido.setIdtecido(idtecido);
-        tecido.getIdtecido();
-        em.remove(tecido);
-        em.getTransaction().commit();
-        em.close();
-    }
-
-    //EDITAR DADOS TECIDO
-
     public static void editDescTecido(int idtecido, String desc){
         EntityManager em = null;
         em = getEntityManager();
@@ -75,5 +100,5 @@ public class TecidoBLL implements Serializable {
         em.getTransaction().commit();
         em.close();
     }
-
 }
+
