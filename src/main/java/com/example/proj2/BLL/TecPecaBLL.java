@@ -2,7 +2,6 @@ package com.example.proj2.BLL;
 
 import com.example.proj2.DAL.Peca;
 import com.example.proj2.DAL.Tecido;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

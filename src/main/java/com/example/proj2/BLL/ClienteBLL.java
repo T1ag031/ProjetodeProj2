@@ -93,7 +93,7 @@ public class ClienteBLL implements Serializable {
     }
 
     //ELIMINAR CLIENTE
-    public static void deleteCliente(int codcliente){
+   /* public static void deleteCliente(int codcliente){
         EntityManager em = null;
         em = getEntityManager();
         em.getTransaction().begin();
@@ -104,7 +104,7 @@ public class ClienteBLL implements Serializable {
         em.remove(cliente);
         em.getTransaction().commit();
         em.close();
-    }
+    }*/
 
     //EDITAR CADA DADO DO CLIENTE
     public static void editNomeCliente(int cod, String nome){
